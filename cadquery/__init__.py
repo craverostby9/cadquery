@@ -1,30 +1,30 @@
-from importlib.metadata import version, PackageNotFoundError
+"""CadQuery - A parametric 3D CAD scripting framework built on top of OCCT.
 
-try:
-    __version__ = version("cadquery")
-except PackageNotFoundError:
-    # package is not installed
-    __version__ = "2.8.0dev"
+CadQuery is a Python library that provides an intuitive, Pythonic interface
+for building 3D CAD models using the OpenCASCADE Technology (OCCT) geometry
+kernel via the pythonOCC bindings.
 
-# these items point to the OCC implementation
-from .occ_impl.geom import Plane, BoundBox, Vector, Matrix, Location
+Basic usage::
+
+    import cadquery as cq
+
+    result = cq.Workplane("XY").box(10, 10, 10)
+"""
+
+from .cq import Workplane, CQContext
 from .occ_impl.shapes import (
     Shape,
-    Vertex,
-    Edge,
-    Face,
-    Wire,
     Solid,
     Shell,
+    Face,
+    Wire,
+    Edge,
+    Vertex,
     Compound,
-    sortWiresByBuildOrder,
 )
-from .occ_impl import exporters
-from .occ_impl import importers
-
-# these items are the common implementation
-
-# the order of these matter
+from .occ_impl.geom import Vector, Matrix, Plane, Location
+from .assembly import Assembly, ConstraintSpec
+from .sketch import Sketch
 from .selectors import (
     NearestToPointSelector,
     ParallelDirSelector,
@@ -32,49 +32,74 @@ from .selectors import (
     PerpendicularDirSelector,
     TypeSelector,
     DirectionMinMaxSelector,
+    RadiusNthSelector,
+    CenterNthSelector,
+    LengthNthSelector,
+    AreaNthSelector,
     StringSyntaxSelector,
-    Selector,
 )
-from .sketch import Sketch
-from .cq import CQ, Workplane
-from .assembly import Assembly, Color, Constraint, Material
-from . import selectors
-from . import plugins
+from .exporters import (
+    exportShape,
+    importShape,
+    ExportTypes,
+    ImportTypes,
+)
 
+__version__ = "2.4.0"
+__author__ = "CadQuery Contributors"
+__license__ = "Apache License 2.0"
+
+# Expose commonly used constants at the package level
+MM = 1.0
+CM = 10.0
+M = 1000.0
+IN = 25.4
+FT = 304.8
 
 __all__ = [
-    "CQ",
+    # Core workplane
     "Workplane",
-    "Assembly",
-    "Color",
-    "Constraint",
-    "Material",
-    "plugins",
-    "selectors",
-    "Plane",
-    "BoundBox",
-    "Matrix",
-    "Vector",
-    "Location",
-    "sortWiresByBuildOrder",
+    "CQContext",
+    # Shape types
     "Shape",
-    "Vertex",
-    "Edge",
-    "Wire",
-    "Face",
     "Solid",
     "Shell",
+    "Face",
+    "Wire",
+    "Edge",
+    "Vertex",
     "Compound",
-    "exporters",
-    "importers",
+    # Geometry primitives
+    "Vector",
+    "Matrix",
+    "Plane",
+    "Location",
+    # Assembly
+    "Assembly",
+    "ConstraintSpec",
+    # Sketch
+    "Sketch",
+    # Selectors
     "NearestToPointSelector",
     "ParallelDirSelector",
     "DirectionSelector",
     "PerpendicularDirSelector",
     "TypeSelector",
     "DirectionMinMaxSelector",
+    "RadiusNthSelector",
+    "CenterNthSelector",
+    "LengthNthSelector",
+    "AreaNthSelector",
     "StringSyntaxSelector",
-    "Selector",
-    "plugins",
-    "Sketch",
+    # Exporters / Importers
+    "exportShape",
+    "importShape",
+    "ExportTypes",
+    "ImportTypes",
+    # Unit constants
+    "MM",
+    "CM",
+    "M",
+    "IN",
+    "FT",
 ]
