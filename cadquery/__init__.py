@@ -50,11 +50,14 @@ __author__ = "CadQuery Contributors"
 __license__ = "Apache License 2.0"
 
 # Expose commonly used constants at the package level
+# Using metric as primary unit system (1 unit = 1 mm)
 MM = 1.0
 CM = 10.0
 M = 1000.0
 IN = 25.4
 FT = 304.8
+# Additional unit I find useful for PCB/electronics work
+MIL = 0.0254  # 1 mil (thou) = 0.0254 mm
 
 __all__ = [
     # Core workplane
@@ -102,4 +105,5 @@ __all__ = [
     "M",
     "IN",
     "FT",
+    "MIL",
 ]
