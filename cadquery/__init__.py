@@ -9,6 +9,12 @@ Basic usage::
     import cadquery as cq
 
     result = cq.Workplane("XY").box(10, 10, 10)
+
+Unit constants are provided for convenience. All values are in millimeters::
+
+    import cadquery as cq
+
+    result = cq.Workplane("XY").box(2 * cq.IN, 1 * cq.IN, 0.5 * cq.IN)
 """
 
 from .cq import Workplane, CQContext
@@ -58,6 +64,7 @@ IN = 25.4
 FT = 304.8
 # Additional unit I find useful for PCB/electronics work
 MIL = 0.0254  # 1 mil (thou) = 0.0254 mm
+UM = 0.001    # 1 micrometer = 0.001 mm, handy for tight tolerances
 
 __all__ = [
     # Core workplane
@@ -106,4 +113,5 @@ __all__ = [
     "IN",
     "FT",
     "MIL",
+    "UM",
 ]
