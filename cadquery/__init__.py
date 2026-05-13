@@ -70,6 +70,14 @@ UM = 0.001    # 1 micrometer = 0.001 mm, handy for tight tolerances
 INCH = IN   # more readable alias for IN
 FOOT = FT   # more readable alias for FT
 
+# Common fractional inch values I use frequently for woodworking/hobby projects
+# e.g.: cq.Workplane("XY").box(cq.IN_1_4, cq.IN_1_2, cq.IN_3_4)
+IN_1_8  = IN / 8    # 1/8 inch
+IN_1_4  = IN / 4    # 1/4 inch
+IN_3_8  = IN * 3/8  # 3/8 inch
+IN_1_2  = IN / 2    # 1/2 inch
+IN_3_4  = IN * 3/4  # 3/4 inch
+
 __all__ = [
     # Core workplane
     "Workplane",
@@ -120,4 +128,10 @@ __all__ = [
     "UM",
     "INCH",
     "FOOT",
+    # Fractional inch shortcuts
+    "IN_1_8",
+    "IN_1_4",
+    "IN_3_8",
+    "IN_1_2",
+    "IN_3_4",
 ]
