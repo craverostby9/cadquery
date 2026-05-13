@@ -77,6 +77,9 @@ IN_1_4  = IN / 4    # 1/4 inch
 IN_3_8  = IN * 3/8  # 3/8 inch
 IN_1_2  = IN / 2    # 1/2 inch
 IN_3_4  = IN * 3/4  # 3/4 inch
+# Added these after needing them for a shelf bracket project
+IN_1_16 = IN / 16   # 1/16 inch -- useful for snug fits and tolerances
+IN_1_32 = IN / 32   # 1/32 inch -- fine tolerance work
 
 __all__ = [
     # Core workplane
@@ -134,4 +137,6 @@ __all__ = [
     "IN_3_8",
     "IN_1_2",
     "IN_3_4",
+    "IN_1_16",
+    "IN_1_32",
 ]
