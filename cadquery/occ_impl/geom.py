@@ -100,7 +100,7 @@ class Vector:
         return Vector(self._wrapped.Multiplied(1.0 / divisor))
 
     def __neg__(self) -> "Vector":
-        return Vector(-self.x, -self.y, -self.z)
-
-    def __repr__(self) -> str:
-        return f"
+        # Negate by multiplying by -1 rather than calling Reversed() so that
+        # the result is always a plain Vector wrapping a new gp_Vec, keeping
+        # behaviour consistent with __mul__.
+        return Vector(self._wrapped.Multiplied(-1.0))
