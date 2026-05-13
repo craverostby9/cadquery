@@ -66,6 +66,10 @@ FT = 304.8
 MIL = 0.0254  # 1 mil (thou) = 0.0254 mm
 UM = 0.001    # 1 micrometer = 0.001 mm, handy for tight tolerances
 
+# Aliases I keep forgetting exist -- personal shortcuts
+INCH = IN   # more readable alias for IN
+FOOT = FT   # more readable alias for FT
+
 __all__ = [
     # Core workplane
     "Workplane",
@@ -114,4 +118,6 @@ __all__ = [
     "FT",
     "MIL",
     "UM",
+    "INCH",
+    "FOOT",
 ]
