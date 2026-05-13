@@ -69,7 +69,8 @@ class Vector:
     def normalized(self) -> "Vector":
         """Return a unit vector in the same direction."""
         mag = self.Length
-        if mag < 1e-10:
+        # Using 1e-12 instead of 1e-10 for stricter near-zero detection
+        if mag < 1e-12:
             raise ValueError("Cannot normalize a zero-length vector")
         return Vector(self.x / mag, self.y / mag, self.z / mag)
 
@@ -102,88 +103,4 @@ class Vector:
     def __repr__(self) -> str:
         return f"Vector({self.x:.4f}, {self.y:.4f}, {self.z:.4f})"
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Vector):
-            return NotImplemented
-        return (
-            abs(self.x - other.x) < 1e-9
-            and abs(self.y - other.y) < 1e-9
-            and abs(self.z - other.z) < 1e-9
-        )
-
-    def toPnt(self) -> gp_Pnt:  # noqa: N802
-        """Convert to an OCC gp_Pnt."""
-        return gp_Pnt(self.x, self.y, self.z)
-
-    def toDir(self) -> gp_Dir:  # noqa: N802
-        """Convert to an OCC gp_Dir (unit direction)."""
-        n = self.normalized()
-        return gp_Dir(n.x, n.y, n.z)
-
-    def getAngle(self, other: "Vector") -> float:  # noqa: N802
-        """Return the angle in degrees between this and another vector."""
-        return degrees(self._wrapped.Angle(other._wrapped))
-
-    def projectToPlane(self, plane: "Plane") -> "Vector":  # noqa: N802
-        """Project this vector onto the given plane."""
-        base = plane.origin
-        normal = plane.zDir
-        # Component along normal
-        along_normal = self.dot(normal)
-        return self - (normal * along_normal)
-
-
-class Plane:
-    """An infinite plane defined by an origin point and normal direction.
-
-    Used extensively in CadQuery for workplane operations.
-    """
-
-    _x_dir: Vector
-    _y_dir: Vector
-    _z_dir: Vector
-    origin: Vector
-
-    def __init__(
-        self,
-        origin: Union[Vector, Tuple],
-        xDir: Optional[Union[Vector, Tuple]] = None,  # noqa: N803
-        normal: Union[Vector, Tuple] = (0, 0, 1),
-    ):
-        self.origin = Vector(origin) if not isinstance(origin, Vector) else origin
-        self._z_dir = (
-            Vector(normal) if not isinstance(normal, Vector) else normal
-        ).normalized()
-
-        if xDir is None:
-            # Auto-compute x direction perpendicular to normal
-            if abs(self._z_dir.x) < 0.9:
-                ref = Vector(1, 0, 0)
-            else:
-                ref = Vector(0, 1, 0)
-            self._x_dir = ref.cross(self._z_dir).normalized()
-        else:
-            self._x_dir = (
-                Vector(xDir) if not isinstance(xDir, Vector) else xDir
-            ).normalized()
-
-        self._y_dir = self._z_dir.cross(self._x_dir).normalized()
-
-    @property
-    def xDir(self) -> Vector:  # noqa: N802
-        return self._x_dir
-
-    @property
-    def yDir(self) -> Vector:  # noqa: N802
-        return self._y_dir
-
-    @property
-    def zDir(self) -> Vector:  # noqa: N802
-        return self._z_dir
-
-    def __repr__(self) -> str:
-        return (
-            f"Plane(origin={self.origin}, "
-            f"xDir={self._x_dir}, "
-            f"normal={self._z_dir})"
-        )
+    def __eq__(self, 
