@@ -95,12 +95,12 @@ class Vector:
         return self.__mul__(scale)
 
     def __truediv__(self, divisor: float) -> "Vector":
+        if divisor == 0:
+            raise ZeroDivisionError("Cannot divide a vector by zero")
         return Vector(self._wrapped.Multiplied(1.0 / divisor))
 
     def __neg__(self) -> "Vector":
         return Vector(-self.x, -self.y, -self.z)
 
     def __repr__(self) -> str:
-        return f"Vector({self.x:.4f}, {self.y:.4f}, {self.z:.4f})"
-
-    def __eq__(self, 
+        return f"
